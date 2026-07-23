@@ -97,35 +97,6 @@ CHANGELOG.md
 ```
 
 Ela tambem aparece no dropdown do usuario na interface web.
-
-## Manutencao do projeto
-
-Sempre que houver mudanca funcional, operacional ou de estrutura, revise este
-README junto com o `.gitignore`. A documentacao deve acompanhar novas telas,
-scripts, comandos, versoes, banco de dados, implantacao e arquivos gerados; o
-`.gitignore` deve proteger arquivos locais, credenciais, logs, bancos SQLite e
-pacotes temporarios.
-
-## Identidade visual
-
-| Cor | Uso |
-| --- | --- |
-| `#0f2452` | Azul-marinho principal, base institucional escura |
-| `#153064` | Azul profundo para cabecalhos e areas nobres |
-| `#1f4b8f` | Azul corporativo forte para titulos e barras |
-| `#2a63a8` | Azul medio para acoes e estados ativos |
-| `#2f76bf` | Azul primario do sistema |
-| `#3f8fd2` | Azul claro para botoes e seletores ativos |
-| `#61aee8` | Azul luminoso para detalhes e realces |
-| `#44b5f0` | Azul-acento/ciano para destaque moderno |
-| `#ffffff` | Fundo e cards principais |
-| `#f7f9fc` | Fundo branco-gelo do sistema |
-| `#10233f` | Texto principal azul petroleo |
-| `#4f6789` | Texto secundario |
-| `#5a7398` | Labels, descricoes e textos auxiliares |
-| `#16a34a` | Verde de sucesso |
-| `#dc2626` | Vermelho para erro e alerta critico |
-| `#f59e0b` | Ambar para atencao e espera |
 | `#c93c5b` | Linha vermelha inferior da navbar |
 | `rgba(255,255,255,0.78)` | Vidro base dos paineis |
 | `rgba(122,164,212,0.34)` | Borda glassmorphism |
