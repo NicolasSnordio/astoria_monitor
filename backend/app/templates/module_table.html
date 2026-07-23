@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="page-heading">
+  <div>
+    <h1>{{ title }}</h1>
+    <p class="heading-note">{{ subtitle }}</p>
+  </div>
+  <div class="toolbar">
+    <button class="primary-button js-open-asset-modal" type="button">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+      Novo ativo
+    </button>
+    <button class="ghost-button js-export-soon" type="button">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>
+      Exportar
+    </button>
+    <button class="ghost-button js-open-filters" type="button">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16l-6 7v5l-4 2v-7z"/></svg>
+      Filtros
+    </button>
+  </div>
+</section>
+
+<section class="summary-grid compact-summary">
+  <article class="summary-card tone-success"><div><span class="summary-label"><i></i>Online</span><strong>{{ online_count }}</strong><small>{{ online_pct }}% do total</small></div></article>
+  <article class="summary-card tone-warning"><div><span class="summary-label"><i></i>Atencao</span><strong>{{ attention_count }}</strong><small>{{ attention_pct }}% do total</small></div></article>
+  <article class="summary-card tone-danger"><div><span class="summary-label"><i></i>Offline</span><strong>{{ offline_count }}</strong><small>{{ offline_pct }}% do total</small></div></article>
+  <article class="summary-card tone-muted"><div><span class="summary-label"><i></i>Sem coleta</span><strong>{{ no_collect_count }}</strong><small>{{ no_collect_pct }}% do total</small></div></article>
+</section>
+
+<section class="panel">
+  <div class="panel-titlebar">
+    <h2>{{ table_title }}</h2>
+    <div class="segmented">
+      <button class="is-active" data-segment="all" type="button">Todos</button>
+      <button data-segment="notebook" type="button">Notebooks</button>
+      <button data-segment="desktop" type="button">Desktops</button>
+      <button data-segment="critical" type="button">Criticos</button>
+    </div>
+  </div>
+  {% include "_assets_table.html" %}
+  <div class="table-footer">
+    <span data-visible-count>Mostrando {{ rows|length }} de {{ total_stations }} ativos</span>
+    <div class="pager">
+      <button type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
+      <button class="is-active" type="button">1</button>
+      <button type="button">2</button>
+      <button type="button">3</button>
+    </div>
+  </div>
+</section>
+{% endblock %}

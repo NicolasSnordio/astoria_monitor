@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login - {{ settings.app_name }}</title>
+    <link rel="icon" href="{{ url_for('static', path='favicon-astoria-a.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='app.css') }}">
+  </head>
+  <body class="login-screen">
+    <main class="login-shell">
+      <section class="login-brand">
+        <img src="{{ url_for('static', path='logo-astoria-sf.png') }}" alt="Astoria">
+        <h1>Astoria Monitor</h1>
+        <p>Monitoramento interno de ativos, alertas e inventario da rede local.</p>
+      </section>
+      <form class="login-card" method="post" action="/login">
+        <span class="login-kicker">Acesso administrativo</span>
+        <h2>Entrar no sistema</h2>
+        {% if error %}<p class="login-error">{{ error }}</p>{% endif %}
+        <label>Usuario<input name="username" autocomplete="username" value="admin" required></label>
+        <label>Senha<input name="password" type="password" autocomplete="current-password" placeholder="admin" required></label>
+        <button class="primary-button" type="submit">Entrar</button>
+        <small>Usuario inicial: admin | Permissao: 100%</small>
+      </form>
+    </main>
+  </body>
+</html>

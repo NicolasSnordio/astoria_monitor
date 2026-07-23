@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="page-heading">
+  <div>
+    <h1>Relatorios</h1>
+    <p class="heading-note">Indicadores consolidados para acompanhar disponibilidade, riscos, armazenamento e setores mais afetados.</p>
+  </div>
+  <div class="toolbar">
+    <button class="ghost-button js-export-soon" type="button">Exportar</button>
+    <button class="ghost-button js-open-filters" type="button">Filtros</button>
+  </div>
+</section>
+
+<section class="report-grid">
+  <article class="panel report-card">
+    <h2>Ativos em risco</h2>
+    <strong>{{ risk_total }}</strong>
+    <p>{{ offline_count }} offline, {{ attention_count }} em atencao e {{ no_collect_count }} sem coleta.</p>
+  </article>
+  <article class="panel report-card">
+    <h2>Disponibilidade</h2>
+    <strong>{{ online_pct }}%</strong>
+    <p>{{ online_count }} de {{ total_stations }} ativos aparecem saudaveis.</p>
+  </article>
+  <article class="panel report-card">
+    <h2>Disco critico</h2>
+    <strong>{{ disk_low_count }}</strong>
+    <p>ativos com 15 GB ou menos livres.</p>
+  </article>
+</section>
+
+<section class="reports-layout">
+  <article class="panel">
+    <div class="panel-titlebar">
+      <h2>Distribuicao por status</h2>
+    </div>
+    <div class="status-report">
+      <div class="donut report-donut" style="--online-end: {{ health_online_end }}%; --warning-end: {{ health_warning_end }}%; --critical-end: {{ health_critical_end }}%;">
+        <span>{{ total_stations }}</span>
+        <small>Total</small>
+      </div>
+      <div class="report-legend">
+        {% for segment in status_segments %}
+        <div>
+          <span class="legend-dot {{ segment.tone }}"></span>
+          <strong>{{ segment.label }}</strong>
+          <em>{{ segment.count }} ativos</em>
+          <b>{{ segment.pct }}%</b>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </article>
+
+  <article class="panel">
+    <div class="panel-titlebar">
+      <h2>Risco por setor</h2>
+    </div>
+    <div class="bar-list">
+      {% for item in sector_risk %}
+      <div class="bar-row">
+        <span>{{ item.label }}</span>
+        <div><i style="width: {{ item.pct }}%"></i></div>
+        <strong>{{ item.count }}</strong>
+      </div>
+      {% else %}
+      <p class="empty-state">Nenhum setor em risco.</p>
+      {% endfor %}
+    </div>
+  </article>
+</section>
+
+<section class="reports-layout">
+  <article class="panel">
+    <div class="panel-titlebar">
+      <h2>Armazenamento em observacao</h2>
+    </div>
+    <div class="storage-list">
+      {% for item in storage_chart %}
+      <div class="storage-row">
+        <div>
+          <strong>{{ item.asset_code }}</strong>
+          <span>{{ item.equipment }}</span>
+        </div>
+        <div class="storage-track"><i style="width: {{ item.pct }}%"></i></div>
+        <b>{{ "%.1f"|format(item.disk_free_gb) }} GB</b>
+      </div>
+      {% endfor %}
+    </div>
+  </article>
+
+  <article class="panel">
+    <div class="panel-titlebar">
+      <h2>Tipos de risco</h2>
+    </div>
+    <div class="risk-list">
+      {% for item in risk_types %}
+      <div class="risk-row">
+        <span>{{ item.label }}</span>
+        <strong>{{ item.count }}</strong>
+        <div><i style="width: {{ item.pct }}%"></i></div>
+      </div>
+      {% else %}
+      <p class="empty-state">Nenhum risco ativo.</p>
+      {% endfor %}
+    </div>
+  </article>
+</section>
+
+<section class="reports-layout bottom">
+  <article class="panel">
+    <div class="panel-titlebar">
+      <h2>Uso medio dos ativos</h2>
+    </div>
+    <div class="gauge-grid">
+      <div class="gauge-card">
+        <div class="gauge" style="--value: {{ cpu_avg }}%"><span>{{ cpu_avg }}%</span></div>
+        <strong>CPU media</strong>
+      </div>
+      <div class="gauge-card">
+        <div class="gauge" style="--value: {{ memory_avg }}%"><span>{{ memory_avg }}%</span></div>
+        <strong>RAM media</strong>
+      </div>
+    </div>
+  </article>
+
+  <article class="panel">
+    <div class="panel-titlebar">
+      <h2>Mix de dispositivos</h2>
+    </div>
+    <div class="device-mix">
+      {% for item in device_mix %}
+      <div>
+        <strong>{{ item.label }}</strong>
+        <span>{{ item.count }} ativos</span>
+        <div><i style="width: {{ item.pct }}%"></i></div>
+      </div>
+      {% endfor %}
+    </div>
+  </article>
+</section>
+
+<section class="panel">
+  <div class="panel-titlebar"><h2>Base analisada</h2></div>
+  {% include "_assets_table.html" %}
+</section>
+{% endblock %}

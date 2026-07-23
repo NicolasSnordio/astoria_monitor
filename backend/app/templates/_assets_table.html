@@ -1,0 +1,48 @@
+<div class="table-wrap">
+  <table class="assets-table">
+    <thead>
+      <tr>
+        <th>Patrimonio</th>
+        <th>Equipamento</th>
+        <th>Usuario</th>
+        <th>Setor</th>
+        <th>Status</th>
+        <th>Ultima coleta</th>
+        <th>Acoes</th>
+      </tr>
+    </thead>
+    <tbody id="assetTableBody">
+      {% for row in rows %}
+      <tr data-asset-row data-status="{{ row.status_label }}" data-type="{{ row.device_type }}" data-search="{{ row.asset_code }} {{ row.equipment }} {{ row.username }} {{ row.sector }} {{ row.status_label }}">
+        <td><a href="{{ row.detail_url or '/assets' }}">{{ row.asset_code }}</a></td>
+        <td>
+          <span class="equipment-cell">
+            <span class="device-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="5" width="14" height="11" rx="1.5"/><path d="M9 20h6M12 16v4"/></svg>
+            </span>
+            {{ row.equipment }}
+          </span>
+        </td>
+        <td>{{ row.username }}</td>
+        <td>{{ row.sector }}</td>
+        <td><span class="status {{ row.status_class }}"><i></i>{{ row.status_label }}</span></td>
+        <td>{{ row.last_seen }}</td>
+        <td>
+          <span class="row-actions">
+            <a href="{{ row.detail_url or '/assets' }}" aria-label="Ver detalhes">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6z"/><circle cx="12" cy="12" r="2.5"/></svg>
+            </a>
+            <button class="js-row-menu" type="button" aria-label="Mais opcoes">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="5" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="19" r="1.6"/></svg>
+            </button>
+          </span>
+        </td>
+      </tr>
+      {% else %}
+      <tr>
+        <td colspan="7" class="empty-state">Nenhum ativo encontrado para os filtros atuais.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>

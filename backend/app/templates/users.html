@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="page-heading">
+  <div>
+    <h1>Usuarios</h1>
+    <p class="heading-note">Cadastro de acessos e permissoes do Astoria Monitor.</p>
+  </div>
+  <div class="toolbar">
+    <button class="primary-button" type="button">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+      Novo usuario
+    </button>
+  </div>
+</section>
+
+<section class="panel">
+  <div class="panel-titlebar"><h2>Permissoes do sistema</h2></div>
+  <div class="table-wrap">
+    <table class="assets-table">
+      <thead><tr><th>Nome</th><th>Usuario</th><th>Perfil</th><th>Permissao</th><th>Status</th></tr></thead>
+      <tbody>
+        {% for row in users %}
+        <tr><td>{{ row.name }}</td><td>{{ row.username }}</td><td>{{ row.profile }}</td><td>{{ row.permission }}</td><td><span class="status {{ 'is-online' if row.status == 'Ativo' else 'is-warning' }}"><i></i>{{ row.status }}</span></td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}

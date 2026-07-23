@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="page-heading">
+  <div>
+    <h1>Alertas</h1>
+    <p class="heading-note">Central dos ativos com atencao, risco ou falha de coleta.</p>
+  </div>
+  <div class="toolbar">
+    <button class="ghost-button js-open-filters" type="button">Filtros</button>
+  </div>
+</section>
+
+<section class="panel">
+  <div class="panel-titlebar"><h2>Fila de alertas</h2></div>
+  <div class="alert-board">
+    {% for row in rows %}
+    <article class="alert-ticket" data-asset-row data-status="{{ row.status_label }}" data-type="{{ row.device_type }}" data-search="{{ row.asset_code }} {{ row.equipment }} {{ row.username }} {{ row.sector }} {{ row.alert }}">
+      <span class="status {{ row.status_class }}"><i></i>{{ row.status_label }}</span>
+      <h2>{{ row.alert or row.risk }}</h2>
+      <p>{{ row.asset_code }} - {{ row.equipment }}</p>
+      <small>{{ row.username }} | {{ row.sector }} | {{ row.last_seen }}</small>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

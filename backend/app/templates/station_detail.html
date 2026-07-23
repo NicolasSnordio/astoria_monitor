@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="panel">
+  <div class="panel-header">
+    <div>
+      <a class="back-link" href="/">Voltar</a>
+      <h1>{{ station.hostname }}</h1>
+      <p>{{ station.os_name or "Windows" }} {{ station.os_version or "" }}</p>
+    </div>
+    <span class="status {{ 'is-online' if online else 'is-offline' }}">
+      {{ "Online" if online else "Offline" }}
+    </span>
+  </div>
+
+  <dl class="facts">
+    <div><dt>Usuario</dt><dd>{{ station.username or "-" }}</dd></div>
+    <div><dt>IP</dt><dd>{{ station.ip_address or "-" }}</dd></div>
+    <div><dt>CPU</dt><dd>{{ station.cpu_count or "-" }} nucleos</dd></div>
+    <div><dt>Memoria total</dt><dd>{{ station.total_memory_mb or "-" }} MB</dd></div>
+  </dl>
+</section>
+
+<section class="two-columns">
+  <div class="panel">
+    <div class="panel-header">
+      <h2>Metricas recentes</h2>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Coleta</th>
+            <th>CPU</th>
+            <th>RAM</th>
+            <th>Disco livre</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for metric in metrics %}
+          <tr>
+            <td>{{ metric.collected_at.strftime("%d/%m/%Y %H:%M") }}</td>
+            <td>{{ "%.0f%%"|format(metric.cpu_percent) if metric.cpu_percent is not none else "-" }}</td>
+            <td>{{ "%.0f%%"|format(metric.memory_percent) if metric.memory_percent is not none else "-" }}</td>
+            <td>{{ "%.1f GB"|format(metric.disk_free_gb) if metric.disk_free_gb is not none else "-" }}</td>
+          </tr>
+          {% else %}
+          <tr><td colspan="4" class="empty-state">Sem metricas recebidas.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-header">
+      <h2>Alertas</h2>
+    </div>
+    <div class="alert-list">
+      {% for alert in alerts %}
+      <div class="alert-item {{ 'is-closed' if alert.closed_at else '' }}">
+        <strong>{{ alert.message }}</strong>
+        <span>{{ "Fechado" if alert.closed_at else "Aberto" }} em {{ alert.opened_at.strftime("%d/%m/%Y %H:%M") }}</span>
+      </div>
+      {% else %}
+      <p class="empty-state">Sem alertas.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

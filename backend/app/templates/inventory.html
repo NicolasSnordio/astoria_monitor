@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="page-heading">
+  <div>
+    <h1>Inventario</h1>
+    <p class="heading-note">Visao temporaria de sistema operacional, softwares e recursos basicos.</p>
+  </div>
+  <div class="toolbar">
+    <button class="ghost-button js-export-soon" type="button">Exportar</button>
+    <button class="ghost-button js-open-filters" type="button">Filtros</button>
+  </div>
+</section>
+
+<section class="panel">
+  <div class="panel-titlebar"><h2>Inventario dos equipamentos</h2></div>
+  <div class="table-wrap">
+    <table class="assets-table">
+      <thead><tr><th>Patrimonio</th><th>Equipamento</th><th>Sistema</th><th>Softwares</th><th>Disco livre</th><th>CPU</th><th>RAM</th></tr></thead>
+      <tbody>
+        {% for row in rows %}
+        <tr data-asset-row data-status="{{ row.status_label }}" data-type="{{ row.device_type }}" data-search="{{ row.asset_code }} {{ row.equipment }} {{ row.os_name }} {{ row.software }}">
+          <td>{{ row.asset_code }}</td><td>{{ row.equipment }}</td><td>{{ row.os_name }}</td><td>{{ row.software }}</td><td>{{ row.disk_free_gb }} GB</td><td>{{ row.cpu_percent }}%</td><td>{{ row.memory_percent }}%</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}
